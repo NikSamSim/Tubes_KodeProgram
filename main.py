@@ -214,11 +214,11 @@ def set_temperature():
         if(temp_temperature_status == "up"):
             if (temperature_status == 32):
                 temperature_status = 31
-            temp_temperature_status += 1
+            temp_temperature_status = temperature_status+1
         elif(temp_temperature_status == "down"):
             if (temperature_status == 16):
                 temperature_status = 17
-            temp_temperature_status -= 1
+            temp_temperature_status = temperature_status-1
         else:
             print("Wrong input.")
             set_temperature()
