@@ -212,9 +212,9 @@ def set_temperature():
 		temp_temperature_status = int(temp_temperature_status)
 	except ValueError:
 		if(temp_temperature_status == "up"):
-			temp_temperature_status = temperature_status+1
+			temp_temperature_status += 1
 		elif(temp_temperature_status == "down"):
-			temp_temperature_status = temperature_status-1
+			temp_temperature_status -= 1
 		else:
 			print("Wrong input.")
 			set_temperature()
