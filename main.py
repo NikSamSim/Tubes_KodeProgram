@@ -129,29 +129,17 @@ def mode():
 		print(f"{op} ", end="")
 	print()
 	# using temp variable to avoid accessing the main variable directly
-	temp_mode_status = input("Enter your changes: ").lower() 
+	temp_mode_status = input("Enter your changes: ").title() 
 	
 	try:
 		temp_mode_status = int(temp_mode_status)
 	except ValueError:
-		if(temp_mode_status == "cool"):
-			temp_mode_status = options[0]
-		elif(temp_mode_status == "dry"):
-			temp_mode_status = options[1]
-		elif(temp_mode_status == "fan"):
-			temp_mode_status = options[2]
-		elif(temp_mode_status == "turbo"):
-			temp_mode_status = options[3]
-		elif(temp_mode_status == "quiet"):
-			temp_mode_status = options[4]
-		elif(temp_mode_status == "sleep"):
-			temp_mode_status = options[5]
-		elif(temp_mode_status == "auto"):
-			temp_mode_status = options[6]
-		else:
+		try:
+			temp_mode_status = options[options.index(temp_mode_status)]
+		except ValueError:
 			print("Wrong input.")
 			mode()
-			return False
+			return False		
 	else:
 		if(temp_mode_status >=0 and temp_mode_status <= len(options)):
 			if(temp_mode_status == 0):
