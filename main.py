@@ -208,7 +208,6 @@ def set_temperature():
 	
 	print(f"Current temperature: {temperature_status}")
 	temp_temperature_status = input("Enter your changes: ") # using temp variable to avoid accessing the main variable directly
-	temp_temperature_status = int(temp_temperature_status)
 	try:
 		temp_temperature_status = int(temp_temperature_status)
 	except ValueError:
