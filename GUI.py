@@ -1,10 +1,10 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import threading
 import time
 
-# Global Variabel
+# Global Variables
 power_status = "Off"
 swing_status = "Off"
 fan_status = "Low"
@@ -12,14 +12,14 @@ mode_status = "Normal"
 timer_status = "Off"
 temperature_status = 23
 
-# Fungsi dan Prosedur
+# Functions and Procedures
 def power():
     global power_status
     if power_status == "Off":
         power_status = "On"
     else:
         power_status = "Off"
-        reset()  
+        reset()
     update_display()
 
 def power_check():
@@ -114,64 +114,72 @@ def update_display():
                                             f"Fan: {fan_status}\n"
                                             f"Mode: {mode_status}\n"
                                             f"Timer: {timer_status}",
-                             font=("Helvetica Neue", 14), justify="left", fg="black", bg="lightgrey")
-        control_frame.pack(pady=10)
+                             font=("Helvetica", 14), justify="center", foreground="#FFFFFF", background="#4A4A4A")
+        control_frame.pack(pady=20)
 
-# Setup GUI
+# GUI Setup
 root = tk.Tk()
 root.title("Remote AC")
-root.configure(bg="#2E2E2E")  # Dark background
+root.configure(bg="#1F1F1F")
 
-window_width = 400
-window_height = 600
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
-offset_x = (screen_width - window_width) // 2
-offset_y = (screen_height - window_height) // 2 - 50  
+# Center Window
+window_width, window_height = 400, 600
+screen_width, screen_height = root.winfo_screenwidth(), root.winfo_screenheight()
+offset_x, offset_y = (screen_width - window_width) // 2, (screen_height - window_height) // 2 - 50
 root.geometry(f"{window_width}x{window_height}+{offset_x}+{offset_y}")
 
+# Style
+style = ttk.Style()
+style.theme_use("clam")
+style.configure("TButton", font=("Helvetica", 12), padding=5, relief="flat")
+style.configure("TLabel", font=("Helvetica", 12), background="#1F1F1F", foreground="#FFFFFF")
+
+# Power Image
 power_image_file = "Power.png"
 try:
     power_image = ImageTk.PhotoImage(Image.open(power_image_file).resize((150, 150)))
 except FileNotFoundError:
     power_image = None
 
-display_label = tk.Label(root, bg="lightgrey")
+# Display
+display_label = ttk.Label(root, background="#4A4A4A", anchor="center", width=50)
 display_label.pack(pady=20)
-control_frame = tk.Frame(root, bg="lightgrey")
-power_button = tk.Button(root, text="Power", command=power, bg="red", fg="white", font=("Helvetica Neue", 12))
-power_button.pack(pady=5)
 
-# Temperature Control Fram
-temp_frame = tk.Frame(control_frame, bg="lightgrey")
-temp_frame.pack(pady=5)
-temp_up_button = tk.Button(temp_frame, text="Temperature Up", command=temperature_up, bg="white", fg="black", font=("Helvetica Neue", 12))
-temp_up_button.pack(side="left", padx=5)
-temp_down_button = tk.Button(temp_frame, text="Temperature Down", command=temperature_down, bg="white", fg="black", font=("Helvetica Neue", 12))
-temp_down_button.pack(side="left", padx=5)
+# Controls
+control_frame = ttk.Frame(root, style="TFrame")
+control_frame.pack(pady=10)
+
+# Power Button
+power_button = ttk.Button(root, text="Power", command=power, style="TButton")
+power_button.pack(pady=10)
+
+# Temperature Controls
+temp_frame = ttk.Frame(control_frame)
+temp_frame.pack(pady=10)
+temp_up_button = ttk.Button(temp_frame, text="Temperature (↑)", command=temperature_up)
+temp_up_button.pack(side="left", padx=10)
+temp_down_button = ttk.Button(temp_frame, text="Temperature (↓)", command=temperature_down)
+temp_down_button.pack(side="left", padx=10)
 
 # Swing Button
-swing_button = tk.Button(control_frame, text="Swing", command=swing, bg="white", fg="black", font=("Helvetica Neue", 12))
-swing_button.pack(pady=5)
+swing_button = ttk.Button(control_frame, text="Swing", command=swing)
+swing_button.pack(pady=10)
 
-# Mode and Fan Control Frame
-mode_fan_frame = tk.Frame(control_frame, bg="lightgrey")
-mode_fan_frame.pack(pady=5)
-fan_button = tk.Button(mode_fan_frame, text="Fan Speed", command=fan, bg="white", fg="black", font=("Helvetica Neue", 12))
-fan_button.pack(side="left", padx=5)
-mode_button = tk.Button(mode_fan_frame, text="Change Mode", command=mode, bg="white", fg="black", font=("Helvetica Neue", 12))
-mode_button.pack(side="left", padx=5)
+# Mode & Fan Controls
+mode_fan_frame = ttk.Frame(control_frame)
+mode_fan_frame.pack(pady=10)
+fan_button = ttk.Button(mode_fan_frame, text="Fan Speed", command=fan)
+fan_button.pack(side="left", padx=10)
+mode_button = ttk.Button(mode_fan_frame, text="Change Mode", command=mode)
+mode_button.pack(side="left", padx=10)
 
-# Timer Control
-timer_label = tk.Label(control_frame, text="Set Timer (minutes):", bg="lightgrey", font=("Helvetica Neue", 12))
+# Timer Controls
+timer_label = ttk.Label(control_frame, text="Set Timer (minutes):")
 timer_label.pack(pady=5)
-timer_entry = tk.Entry(control_frame, font=("Helvetica Neue", 12))
+timer_entry = ttk.Entry(control_frame, width=10)
 timer_entry.pack(pady=5)
-timer_button = tk.Button(control_frame, text="Set Timer", command=timer, bg="white", fg="black", font=("Helvetica Neue", 12))
-timer_button.pack(pady=5)
+timer_button = ttk.Button(control_frame, text="Set Timer", command=timer)
+timer_button.pack(pady=10)
 
-# Update Display
 update_display()
-
-# Start the GUI event loop
 root.mainloop()
