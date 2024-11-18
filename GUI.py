@@ -1,3 +1,6 @@
+# Judul : Program Remote AC dengan GUI
+# Keterangan : Program ini mensimulasikan remote AC melalui GUI
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk

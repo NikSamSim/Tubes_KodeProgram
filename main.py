@@ -1,3 +1,6 @@
+# Judul : Program Remote AC dengan Antar Muka CLI
+# Keterangan : Program ini mensimulasikan remote AC melalui CLI
+
 import time
 import threading
 
@@ -139,7 +142,7 @@ def mode():
 		except ValueError:
 			print("Wrong input.")
 			mode()
-			return False		
+			return False
 	else:
 		if(temp_mode_status >=0 and temp_mode_status <= len(options)):
 			if(temp_mode_status == 0):
